@@ -212,15 +212,15 @@ const AboutPage = () => {
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="text-center">
-              <div className="text-4xl md:text-5xl font-bold text-primary mb-2">2,500+</div>
+              <div className="text-4xl md:text-5xl font-bold text-primary mb-2">33+</div>
               <p className="text-muted-foreground">Happy Customers</p>
             </div>
             <div className="text-center">
-              <div className="text-4xl md:text-5xl font-bold text-primary mb-2">10</div>
-              <p className="text-muted-foreground">Tons Waste Recycled</p>
+              <div className="text-4xl md:text-5xl font-bold text-primary mb-2">66</div>
+              <p className="text-muted-foreground">Kg Waste Recycled</p>
             </div>
             <div className="text-center">
-              <div className="text-4xl md:text-5xl font-bold text-primary mb-2">5,000</div>
+              <div className="text-4xl md:text-5xl font-bold text-primary mb-2">100</div>
               <p className="text-muted-foreground">kg CO₂ Saved</p>
             </div>
             <div className="text-center">
