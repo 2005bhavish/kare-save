@@ -17,6 +17,7 @@ import CheckoutPage from "./pages/CheckoutPage";
 import VolunteerPage from "./pages/VolunteerPage";
 import DonationPage from "./pages/DonationPage";
 import Chatbot from "./components/Chatbot";
+import SeekerForm from "./pages/Seekerpage";
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -36,6 +37,7 @@ const App = () => (
               <Route path="/about" element={<AboutPage />} />
               <Route path="/contact" element={<ContactPage />} />
               <Route path="/volunteer" element={<VolunteerPage />} />
+              <Route path="/seeker" element={<SeekerForm />} />
               <Route path="/donate" element={<DonationPage />} />
 
               <Route path="/product/:id" element={<ProductDetailPage />} />
