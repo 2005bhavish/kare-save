@@ -24,7 +24,8 @@ const SeekerForm = () => {
 
   const orgTypes = ['Orphanage', 'Old Age Home', 'NGO', 'Community Center', 'Other'];
 
-  const handleSeekerInfoChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  // handle input fields only
+  const handleSeekerInfoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setSeekerInfo(prev => ({ ...prev, [name]: value }));
   };
@@ -94,6 +95,7 @@ Notes: ${seekerInfo.additionalNotes}
             <CardTitle>Organization Details</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
+            {/* Inputs */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <Label htmlFor="orgName">Organization Name *</Label>
