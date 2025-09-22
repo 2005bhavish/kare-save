@@ -23,8 +23,8 @@ const HomePage = () => {
       name: 'Gracious Gas',
       tagline: 'Clean Energy Solutions',
       description: 'Convert waste to cooking gas with our biogas units',
-      icon: '⚡',
-      color: 'from-blue-500 to-cyan-600',
+      icon: '/gracious-gas-logo.jpg', // your uploaded logo in public folder
+      color: 'from-white-500 to-white-600',
       path: '/brands/gracious-gas'
     },
     {
@@ -140,8 +140,21 @@ const HomePage = () => {
               <Card key={index} className="group cursor-pointer product-card border-0 shadow-card hover:shadow-soft">
                 <CardContent className="p-6">
                   <div className="relative">
-                    <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${brand.color} flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform duration-300`}>
-                      {brand.icon}
+                    <div
+                      className={`w-16 h-16 rounded-full bg-gradient-to-br ${brand.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}
+                    >
+                      {typeof brand.icon === 'string' && brand.icon.startsWith('/')
+                        ? (
+                          <img
+                            src={brand.icon}
+                            alt={brand.name}
+                            className="w-12 h-12 object-contain rounded-full bg-white p-1"
+                          />
+                        )
+                        : (
+                          <span className="text-2xl">{brand.icon}</span>
+                        )
+                      }
                     </div>
                     <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors">
                       {brand.name}
