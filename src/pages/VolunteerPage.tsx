@@ -134,21 +134,21 @@ const VolunteerPage = () => {
           <Card className="text-center">
             <CardContent className="pt-6">
               <Users className="h-8 w-8 text-primary mx-auto mb-2" />
-              <h3 className="text-2xl font-bold">500+</h3>
+              <h3 className="text-2xl font-bold">10+</h3>
               <p className="text-muted-foreground">Active Volunteers</p>
             </CardContent>
           </Card>
           <Card className="text-center">
             <CardContent className="pt-6">
               <Leaf className="h-8 w-8 text-green-600 mx-auto mb-2" />
-              <h3 className="text-2xl font-bold">10,000kg</h3>
+              <h3 className="text-2xl font-bold">2kg</h3>
               <p className="text-muted-foreground">CO₂ Saved</p>
             </CardContent>
           </Card>
           <Card className="text-center">
             <CardContent className="pt-6">
               <MapPin className="h-8 w-8 text-blue-600 mx-auto mb-2" />
-              <h3 className="text-2xl font-bold">50+</h3>
+              <h3 className="text-2xl font-bold">5+</h3>
               <p className="text-muted-foreground">Communities Served</p>
             </CardContent>
           </Card>

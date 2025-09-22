@@ -29,11 +29,10 @@ const AboutPage = () => {
   ];
 
   const milestones = [
-    { year: '2020', event: 'Founded with a vision to create sustainable solutions' },
-    { year: '2021', event: 'Launched Happy Raithu vermicompost products' },
-    { year: '2022', event: 'Introduced Gracious Gas biogas units for homes' },
-    { year: '2023', event: 'Expanded with SBL Pots, Clayer, and Neem Brush brands' },
-    { year: '2024', event: '2,500+ customers and 10 tons of waste recycled' }
+    { year: '2022', event: 'Founded with a vision to create sustainable solutions' },
+    { year: '2023', event: 'Introduced helping hands,gracious gas,happy rythu' },
+    { year: '2024', event: 'Introduced SBL pots,clayer' },
+    { year: '2025', event: 'Working in progress and also introduced neem brush and 33+ customer satisfied' }
   ];
 
   const flowSteps = [

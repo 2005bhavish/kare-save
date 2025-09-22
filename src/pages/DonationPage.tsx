@@ -127,21 +127,21 @@ const DonationPage = () => {
           <Card className="text-center">
             <CardContent className="pt-4">
               <Users className="h-6 w-6 text-green-600 mx-auto mb-1" />
-              <h3 className="text-lg font-bold">1000+</h3>
+              <h3 className="text-lg font-bold">33+</h3>
               <p className="text-xs text-muted-foreground">Lives Impacted</p>
             </CardContent>
           </Card>
           <Card className="text-center">
             <CardContent className="pt-4">
               <Leaf className="h-6 w-6 text-blue-600 mx-auto mb-1" />
-              <h3 className="text-lg font-bold">25T</h3>
+              <h3 className="text-lg font-bold">2T</h3>
               <p className="text-xs text-muted-foreground">CO₂ Saved</p>
             </CardContent>
           </Card>
           <Card className="text-center">
             <CardContent className="pt-4">
               <Building className="h-6 w-6 text-orange-600 mx-auto mb-1" />
-              <h3 className="text-lg font-bold">50+</h3>
+              <h3 className="text-lg font-bold">8+</h3>
               <p className="text-xs text-muted-foreground">Projects</p>
             </CardContent>
           </Card>
