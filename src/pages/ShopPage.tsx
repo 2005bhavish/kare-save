@@ -60,7 +60,7 @@ const ShopPage = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <div className="bg-muted/30 border-b">
+      <div className="bg-black/30 border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="text-center">
             <h1 className="text-3xl md:text-4xl font-bold mb-4">Eco-Friendly Shop</h1>
