@@ -71,7 +71,7 @@ export const products: Product[] = [
     id: 'sbl-001',
     name: 'Eco Planter Set (3 sizes)',
     description: 'Set of 3 biodegradable pots made from coconut coir and natural fibers.',
-    price: 360,
+    price: 120,
     originalPrice: 599,
     brand: 'SBL Pots',
     category: 'Gardening',
