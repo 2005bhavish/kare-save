@@ -18,7 +18,9 @@ const DonationPage = () => {
     name: '',
     email: '',
     phone: '',
-    pan: ''
+    pan: '',
+    foodQuantity: '',       // New: Food quantity in kg
+    foodEdible: 'yes',      // New: Is food edible
   });
 
   const predefinedAmounts = [500, 1000, 2500, 5000, 10000, 25000];
@@ -51,7 +53,7 @@ const DonationPage = () => {
 
   const handleDonate = async () => {
     setIsLoading(true);
-    
+
     try {
       const amount = getDonationAmount();
       if (!amount || amount < 100) {
@@ -60,10 +62,11 @@ const DonationPage = () => {
           description: "Minimum donation amount is ₹100",
           variant: "destructive"
         });
+        setIsLoading(false);
         return;
       }
 
-      // Save donation information
+      // Save donation information including food donation
       const { error } = await supabase
         .from('contact_submissions')
         .insert({
@@ -71,7 +74,13 @@ const DonationPage = () => {
           email: donorInfo.email,
           phone: donorInfo.phone,
           subject: 'Donation Request',
-          message: `Donation Amount: ₹${amount}\nPurpose: ${donationPurpose}\nPAN: ${donorInfo.pan}`
+          message: `
+Donation Amount: ₹${amount}
+Purpose: ${donationPurpose}
+PAN: ${donorInfo.pan}
+Food Donation: ${donorInfo.foodQuantity || 0} kg
+Edible: ${donorInfo.foodEdible === 'yes' ? 'Yes' : 'No'}
+          `
         });
 
       if (error) throw error;
@@ -85,7 +94,7 @@ const DonationPage = () => {
       setSelectedAmount('');
       setCustomAmount('');
       setDonationPurpose('');
-      setDonorInfo({ name: '', email: '', phone: '', pan: '' });
+      setDonorInfo({ name: '', email: '', phone: '', pan: '', foodQuantity: '', foodEdible: 'yes' });
 
     } catch (error) {
       console.error('Donation error:', error);
@@ -175,9 +184,6 @@ const DonationPage = () => {
                             <h4 className="font-medium">{cause.name}</h4>
                             <p className="text-sm text-muted-foreground">{cause.description}</p>
                           </div>
-                          {donationPurpose === cause.id && (
-                            <CheckCircle className="h-5 w-5 text-primary ml-auto" />
-                          )}
                         </div>
                       </div>
                     );
@@ -283,13 +289,43 @@ const DonationPage = () => {
                     />
                   </div>
                 </div>
+
+                {/* Food donation fields */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="foodQuantity">Food Quantity (kg)</Label>
+                    <Input
+                      id="foodQuantity"
+                      name="foodQuantity"
+                      type="number"
+                      placeholder="e.g., 5"
+                      value={donorInfo.foodQuantity}
+                      onChange={handleDonorInfoChange}
+                      min="0"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="foodEdible">Is the Food Edible?</Label>
+                    <Select
+                      value={donorInfo.foodEdible}
+                      onValueChange={(value) => setDonorInfo(prev => ({ ...prev, foodEdible: value }))}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="yes">Yes</SelectItem>
+                        <SelectItem value="no">No</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
               </CardContent>
             </Card>
           </div>
 
           {/* Donation Summary & Action */}
           <div className="space-y-6">
-            {/* Donation Summary */}
             <Card className="sticky top-24">
               <CardHeader>
                 <CardTitle>Donation Summary</CardTitle>
@@ -299,15 +335,16 @@ const DonationPage = () => {
                   <div className="flex justify-between">
                     <span>Cause:</span>
                     <span className="font-medium">
-                      {donationPurpose ? 
-                        donationCauses.find(c => c.id === donationPurpose)?.name : 
-                        'Not selected'
-                      }
+                      {donationPurpose ? donationCauses.find(c => c.id === donationPurpose)?.name : 'Not selected'}
                     </span>
                   </div>
                   <div className="flex justify-between">
                     <span>Amount:</span>
                     <span className="font-medium">₹{getDonationAmount()?.toLocaleString() || 0}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Food Donation:</span>
+                    <span className="font-medium">{donorInfo.foodQuantity || 0} kg ({donorInfo.foodEdible === 'yes' ? 'Edible' : 'Not Edible'})</span>
                   </div>
                   <div className="flex justify-between text-sm text-muted-foreground">
                     <span>Tax Benefit (80G):</span>
@@ -315,10 +352,10 @@ const DonationPage = () => {
                   </div>
                 </div>
 
-                <Button 
+                <Button
                   onClick={handleDonate}
                   disabled={isLoading || !donationPurpose || !getDonationAmount() || !donorInfo.name || !donorInfo.email}
-                  className="w-full" 
+                  className="w-full"
                   size="lg"
                 >
                   {isLoading ? 'Processing...' : 'Donate Now'}
@@ -327,59 +364,6 @@ const DonationPage = () => {
                 <p className="text-xs text-center text-muted-foreground">
                   Secure donation processing. You'll receive a tax-deductible receipt.
                 </p>
-              </CardContent>
-            </Card>
-
-            {/* Tax Benefits */}
-            <Card className="bg-green-50 dark:bg-green-950/20 border-green-200 dark:border-green-800">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <CheckCircle className="h-5 w-5 text-green-600" />
-                  Tax Benefits
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <ul className="space-y-2 text-sm text-green-700 dark:text-green-300">
-                  <li>• 50% tax deduction under Section 80G</li>
-                  <li>• Official receipt provided for all donations</li>
-                  <li>• Registered non-profit organization</li>
-                  <li>• Transparent fund utilization</li>
-                </ul>
-              </CardContent>
-            </Card>
-
-            {/* Impact Information */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Your Impact</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3 text-sm">
-                  {getDonationAmount() >= 500 && (
-                    <div className="flex items-center gap-2">
-                      <Leaf className="h-4 w-4 text-green-600" />
-                      <span>Can support 1 family's composting setup</span>
-                    </div>
-                  )}
-                  {getDonationAmount() >= 1000 && (
-                    <div className="flex items-center gap-2">
-                      <Users className="h-4 w-4 text-blue-600" />
-                      <span>Can provide training to 5 farmers</span>
-                    </div>
-                  )}
-                  {getDonationAmount() >= 5000 && (
-                    <div className="flex items-center gap-2">
-                      <Building className="h-4 w-4 text-orange-600" />
-                      <span>Can contribute to biogas plant setup</span>
-                    </div>
-                  )}
-                  {getDonationAmount() >= 10000 && (
-                    <div className="flex items-center gap-2">
-                      <Heart className="h-4 w-4 text-primary" />
-                      <span>Can sponsor community awareness program</span>
-                    </div>
-                  )}
-                </div>
               </CardContent>
             </Card>
           </div>
