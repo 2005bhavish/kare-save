@@ -60,7 +60,7 @@ const ShopPage = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <div className="bg-black/30 border-b">
+      <div className="bg-gradient-to-br from-primary/10 to-secondary/10 border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="text-center">
             <h1 className="text-3xl md:text-4xl font-bold mb-4">Eco-Friendly Shop</h1>
@@ -72,10 +72,10 @@ const ShopPage = () => {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex flex-col lg:flex-row gap-8">
+        <div className="flex flex-col lg:flex-row gap-8 ">
           {/* Sidebar Filters - Desktop */}
-          <aside className="hidden lg:block w-80 flex-shrink-0">
-            <Card className="sticky top-24">
+          <aside className="hidden lg:block w-80 flex-shrink-0 ">
+            <Card className="sticky top-24 bg-gradient-to-br from-primary/10 to-secondary/10">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between mb-6">
                   <h3 className="font-semibold text-lg">Filters</h3>

@@ -131,21 +131,21 @@ const VolunteerPage = () => {
 
         {/* Impact Stats */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <Card className="text-center">
+          <Card className="text-center bg-gradient-to-br from-primary/10 to-secondary/10">
             <CardContent className="pt-6">
               <Users className="h-8 w-8 text-primary mx-auto mb-2" />
               <h3 className="text-2xl font-bold">10+</h3>
               <p className="text-muted-foreground">Active Volunteers</p>
             </CardContent>
           </Card>
-          <Card className="text-center">
+          <Card className="text-center bg-gradient-to-br from-primary/10 to-secondary/10">
             <CardContent className="pt-6">
               <Leaf className="h-8 w-8 text-green-600 mx-auto mb-2" />
               <h3 className="text-2xl font-bold">2kg</h3>
               <p className="text-muted-foreground">CO₂ Saved</p>
             </CardContent>
           </Card>
-          <Card className="text-center">
+          <Card className="text-center bg-gradient-to-br from-primary/10 to-secondary/10">
             <CardContent className="pt-6">
               <MapPin className="h-8 w-8 text-blue-600 mx-auto mb-2" />
               <h3 className="text-2xl font-bold">5+</h3>
@@ -155,7 +155,7 @@ const VolunteerPage = () => {
         </div>
 
         {/* Application Form */}
-        <Card>
+        <Card className='bg-gradient-to-br from-primary/10 to-secondary/10'>
           <CardHeader>
             <CardTitle>Volunteer Application Form</CardTitle>
           </CardHeader>

@@ -167,9 +167,9 @@ const AboutPage = () => {
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Core Values</h2>
             <p className="text-xl text-muted-foreground">The principles that guide everything we do</p>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 ">
             {values.map((value, index) => (
-              <Card key={index} className="text-center group hover:shadow-soft transition-all duration-300 border-0">
+              <Card key={index} className="text-center group hover:shadow-soft transition-all duration-300 border-0 bg-gradient-to-br from-primary/10 to-secondary/10">
                 <CardContent className="p-6">
                   <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
                     <value.icon className="h-8 w-8 text-primary" />
@@ -237,7 +237,7 @@ const AboutPage = () => {
       </section>
 
       {/* Impact Stats */}
-      <section className="py-20 bg-black/30">
+      <section className="py-20 bg-gradient-to-br from-primary/10 to-secondary/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Impact So Far</h2>
           <p className="text-xl text-muted-foreground mb-12">Together, we're making a real difference</p>
