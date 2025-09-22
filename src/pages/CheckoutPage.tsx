@@ -251,7 +251,7 @@ const CheckoutPage = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="p-4 bg-muted/50 rounded-lg">
+                <div className="p-4 rounded-lg">
                   <div className="flex items-center gap-2 mb-2">
                     <Shield className="h-4 w-4 text-green-500" />
                     <span className="font-medium">Cash on Delivery</span>
