@@ -19,8 +19,8 @@ const DonationPage = () => {
     email: '',
     phone: '',
     pan: '',
-    foodQuantity: '',       // New: Food quantity in kg
-    foodEdible: 'yes',      // New: Is food edible
+    foodAmount: '',
+    isEdible: 'Yes',
   });
 
   const predefinedAmounts = [500, 1000, 2500, 5000, 10000, 25000];
@@ -46,27 +46,29 @@ const DonationPage = () => {
     return customAmount ? parseInt(customAmount) : parseInt(selectedAmount);
   };
 
-  const handleDonorInfoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleDonorInfoChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setDonorInfo(prev => ({ ...prev, [name]: value }));
   };
 
   const handleDonate = async () => {
     setIsLoading(true);
-
     try {
       const amount = getDonationAmount();
-      if (!amount || amount < 100) {
+      if (!amount && !donorInfo.foodAmount) {
         toast({
-          title: "Invalid Amount",
-          description: "Minimum donation amount is ₹100",
+          title: "Invalid Donation",
+          description: "Please enter a donation amount or food donation",
           variant: "destructive"
         });
         setIsLoading(false);
         return;
       }
 
-      // Save donation information including food donation
+      // Prepare message
+      const message = `Donation Amount: ₹${amount || 0}\nPurpose: ${donationPurpose || 'Food Donation'}\nFood: ${donorInfo.foodAmount || 'N/A'}\nEdible: ${donorInfo.isEdible}\nPAN: ${donorInfo.pan}`;
+
+      // Save donation information
       const { error } = await supabase
         .from('contact_submissions')
         .insert({
@@ -74,13 +76,7 @@ const DonationPage = () => {
           email: donorInfo.email,
           phone: donorInfo.phone,
           subject: 'Donation Request',
-          message: `
-Donation Amount: ₹${amount}
-Purpose: ${donationPurpose}
-PAN: ${donorInfo.pan}
-Food Donation: ${donorInfo.foodQuantity || 0} kg
-Edible: ${donorInfo.foodEdible === 'yes' ? 'Yes' : 'No'}
-          `
+          message
         });
 
       if (error) throw error;
@@ -94,7 +90,14 @@ Edible: ${donorInfo.foodEdible === 'yes' ? 'Yes' : 'No'}
       setSelectedAmount('');
       setCustomAmount('');
       setDonationPurpose('');
-      setDonorInfo({ name: '', email: '', phone: '', pan: '', foodQuantity: '', foodEdible: 'yes' });
+      setDonorInfo({
+        name: '',
+        email: '',
+        phone: '',
+        pan: '',
+        foodAmount: '',
+        isEdible: 'Yes',
+      });
 
     } catch (error) {
       console.error('Donation error:', error);
@@ -109,49 +112,49 @@ Edible: ${donorInfo.foodEdible === 'yes' ? 'Yes' : 'No'}
   };
 
   return (
-    <div className="min-h-screen bg-background py-8">
+    <div className="min-h-screen py-8 bg-gradient-to-br from-primary/10 to-secondary/10">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-8">
           <div className="flex justify-center mb-4">
-            <div className="bg-primary/10 p-4 rounded-full">
+            <div className="p-4 rounded-full bg-primary/20">
               <Heart className="h-8 w-8 text-primary" />
             </div>
           </div>
           <h1 className="text-3xl font-bold mb-2">Make a Donation</h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-lg max-w-2xl mx-auto">
             Your contribution helps us create a more sustainable and caring world
           </p>
         </div>
 
         {/* Impact Stats */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-          <Card className="text-center">
+          <Card className="text-center bg-gradient-to-br from-primary/10 to-secondary/10">
             <CardContent className="pt-4">
               <DollarSign className="h-6 w-6 text-primary mx-auto mb-1" />
               <h3 className="text-lg font-bold">₹50L+</h3>
-              <p className="text-xs text-muted-foreground">Raised</p>
+              <p className="text-xs">Raised</p>
             </CardContent>
           </Card>
-          <Card className="text-center">
+          <Card className="text-center bg-gradient-to-br from-primary/10 to-secondary/10">
             <CardContent className="pt-4">
               <Users className="h-6 w-6 text-green-600 mx-auto mb-1" />
               <h3 className="text-lg font-bold">33+</h3>
-              <p className="text-xs text-muted-foreground">Lives Impacted</p>
+              <p className="text-xs">Lives Impacted</p>
             </CardContent>
           </Card>
-          <Card className="text-center">
+          <Card className="text-center bg-gradient-to-br from-primary/10 to-secondary/10">
             <CardContent className="pt-4">
               <Leaf className="h-6 w-6 text-blue-600 mx-auto mb-1" />
               <h3 className="text-lg font-bold">2T</h3>
-              <p className="text-xs text-muted-foreground">CO₂ Saved</p>
+              <p className="text-xs">CO₂ Saved</p>
             </CardContent>
           </Card>
-          <Card className="text-center">
+          <Card className="text-center bg-gradient-to-br from-primary/10 to-secondary/10">
             <CardContent className="pt-4">
               <Building className="h-6 w-6 text-orange-600 mx-auto mb-1" />
               <h3 className="text-lg font-bold">8+</h3>
-              <p className="text-xs text-muted-foreground">Projects</p>
+              <p className="text-xs">Projects</p>
             </CardContent>
           </Card>
         </div>
@@ -160,29 +163,27 @@ Edible: ${donorInfo.foodEdible === 'yes' ? 'Yes' : 'No'}
           {/* Donation Form */}
           <div className="space-y-6">
             {/* Donation Causes */}
-            <Card>
+            <Card className="bg-gradient-to-br from-primary/10 to-secondary/10">
               <CardHeader>
                 <CardTitle>Choose a Cause</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-1 gap-3">
-                  {donationCauses.map((cause) => {
-                    const IconComponent = cause.icon;
+                  {donationCauses.map(cause => {
+                    const Icon = cause.icon;
                     return (
                       <div
                         key={cause.id}
                         className={`p-4 rounded-lg border cursor-pointer transition-all ${
-                          donationPurpose === cause.id
-                            ? 'border-primary bg-primary/5'
-                            : 'border-border hover:border-primary/50'
+                          donationPurpose === cause.id ? 'border-primary bg-primary/20' : 'border-border hover:border-primary/50'
                         }`}
                         onClick={() => setDonationPurpose(cause.id)}
                       >
                         <div className="flex items-center gap-3">
-                          <IconComponent className="h-5 w-5 text-primary" />
+                          <Icon className="h-5 w-5 text-primary" />
                           <div>
                             <h4 className="font-medium">{cause.name}</h4>
-                            <p className="text-sm text-muted-foreground">{cause.description}</p>
+                            <p className="text-sm">{cause.description}</p>
                           </div>
                         </div>
                       </div>
@@ -193,13 +194,13 @@ Edible: ${donorInfo.foodEdible === 'yes' ? 'Yes' : 'No'}
             </Card>
 
             {/* Donation Amount */}
-            <Card>
+            <Card className="bg-gradient-to-br from-primary/10 to-secondary/10">
               <CardHeader>
                 <CardTitle>Select Donation Amount</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                  {predefinedAmounts.map((amount) => (
+                  {predefinedAmounts.map(amount => (
                     <Button
                       key={amount}
                       variant={selectedAmount === amount.toString() ? "default" : "outline"}
@@ -210,7 +211,7 @@ Edible: ${donorInfo.foodEdible === 'yes' ? 'Yes' : 'No'}
                     </Button>
                   ))}
                 </div>
-                
+
                 <div>
                   <Label htmlFor="customAmount">Custom Amount</Label>
                   <Input
@@ -222,18 +223,11 @@ Edible: ${donorInfo.foodEdible === 'yes' ? 'Yes' : 'No'}
                     min="100"
                   />
                 </div>
-
-                <div className="text-center">
-                  <p className="text-2xl font-bold text-primary">
-                    ₹{getDonationAmount()?.toLocaleString() || 0}
-                  </p>
-                  <p className="text-sm text-muted-foreground">Total Donation Amount</p>
-                </div>
               </CardContent>
             </Card>
 
-            {/* Donor Information */}
-            <Card>
+            {/* Donor & Food Info */}
+            <Card className="bg-gradient-to-br from-primary/10 to-secondary/10">
               <CardHeader>
                 <CardTitle>Donor Information</CardTitle>
               </CardHeader>
@@ -246,7 +240,6 @@ Edible: ${donorInfo.foodEdible === 'yes' ? 'Yes' : 'No'}
                       name="name"
                       value={donorInfo.name}
                       onChange={handleDonorInfoChange}
-                      required
                       placeholder="Enter your full name"
                     />
                   </div>
@@ -258,12 +251,11 @@ Edible: ${donorInfo.foodEdible === 'yes' ? 'Yes' : 'No'}
                       type="email"
                       value={donorInfo.email}
                       onChange={handleDonorInfoChange}
-                      required
                       placeholder="your@email.com"
                     />
                   </div>
                 </div>
-                
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="phone">Phone Number *</Label>
@@ -273,7 +265,6 @@ Edible: ${donorInfo.foodEdible === 'yes' ? 'Yes' : 'No'}
                       type="tel"
                       value={donorInfo.phone}
                       onChange={handleDonorInfoChange}
-                      required
                       placeholder="+91 98765 43210"
                     />
                   </div>
@@ -290,32 +281,30 @@ Edible: ${donorInfo.foodEdible === 'yes' ? 'Yes' : 'No'}
                   </div>
                 </div>
 
-                {/* Food donation fields */}
+                {/* Food Donation Fields */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="foodQuantity">Food Quantity (kg)</Label>
+                    <Label htmlFor="foodAmount">Food Donation Quantity</Label>
                     <Input
-                      id="foodQuantity"
-                      name="foodQuantity"
-                      type="number"
-                      placeholder="e.g., 5"
-                      value={donorInfo.foodQuantity}
+                      id="foodAmount"
+                      name="foodAmount"
+                      value={donorInfo.foodAmount}
                       onChange={handleDonorInfoChange}
-                      min="0"
+                      placeholder="e.g., 5 kg"
                     />
                   </div>
                   <div>
-                    <Label htmlFor="foodEdible">Is the Food Edible?</Label>
+                    <Label htmlFor="isEdible">Is the food edible?</Label>
                     <Select
-                      value={donorInfo.foodEdible}
-                      onValueChange={(value) => setDonorInfo(prev => ({ ...prev, foodEdible: value }))}
+                      value={donorInfo.isEdible}
+                      onValueChange={(val) => setDonorInfo(prev => ({ ...prev, isEdible: val }))}
                     >
                       <SelectTrigger>
                         <SelectValue placeholder="Select" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="yes">Yes</SelectItem>
-                        <SelectItem value="no">No</SelectItem>
+                        <SelectItem value="Yes">Yes</SelectItem>
+                        <SelectItem value="No">No</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -326,7 +315,7 @@ Edible: ${donorInfo.foodEdible === 'yes' ? 'Yes' : 'No'}
 
           {/* Donation Summary & Action */}
           <div className="space-y-6">
-            <Card className="sticky top-24">
+            <Card className="sticky top-24 bg-gradient-to-br from-primary/10 to-secondary/10">
               <CardHeader>
                 <CardTitle>Donation Summary</CardTitle>
               </CardHeader>
@@ -334,36 +323,30 @@ Edible: ${donorInfo.foodEdible === 'yes' ? 'Yes' : 'No'}
                 <div className="space-y-3">
                   <div className="flex justify-between">
                     <span>Cause:</span>
-                    <span className="font-medium">
-                      {donationPurpose ? donationCauses.find(c => c.id === donationPurpose)?.name : 'Not selected'}
-                    </span>
+                    <span className="font-medium">{donationPurpose || 'Not selected'}</span>
                   </div>
                   <div className="flex justify-between">
                     <span>Amount:</span>
                     <span className="font-medium">₹{getDonationAmount()?.toLocaleString() || 0}</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span>Food Donation:</span>
-                    <span className="font-medium">{donorInfo.foodQuantity || 0} kg ({donorInfo.foodEdible === 'yes' ? 'Edible' : 'Not Edible'})</span>
-                  </div>
-                  <div className="flex justify-between text-sm text-muted-foreground">
+                  <div className="flex justify-between text-sm">
                     <span>Tax Benefit (80G):</span>
                     <span>₹{Math.round((getDonationAmount() || 0) * 0.5).toLocaleString()}</span>
                   </div>
+                  <div className="flex justify-between">
+                    <span>Food Donation:</span>
+                    <span>{donorInfo.foodAmount || 'N/A'} ({donorInfo.isEdible})</span>
+                  </div>
                 </div>
 
-                <Button
+                <Button 
                   onClick={handleDonate}
-                  disabled={isLoading || !donationPurpose || !getDonationAmount() || !donorInfo.name || !donorInfo.email}
-                  className="w-full"
+                  disabled={isLoading || (!getDonationAmount() && !donorInfo.foodAmount) || !donorInfo.name || !donorInfo.email}
+                  className="w-full" 
                   size="lg"
                 >
                   {isLoading ? 'Processing...' : 'Donate Now'}
                 </Button>
-
-                <p className="text-xs text-center text-muted-foreground">
-                  Secure donation processing. You'll receive a tax-deductible receipt.
-                </p>
               </CardContent>
             </Card>
           </div>
