@@ -49,10 +49,10 @@ const milestones = [
   { year: "2025", event: "Working in progress and also introduced neem brush and 33+ customer satisfied" },
 ];
 
-// Caring cycle steps
+// Caring cycle steps (Energy step uses an image)
 const flowSteps = [
   { icon: "🥬", title: "Food Waste", description: "Kitchen scraps and organic matter" },
-  { icon: "⚡", title: "Energy", description: "Biogas for cooking and heating" },
+  { image: "/images/biogas.jpg", title: "Energy", description: "Biogas for cooking and heating" }, // only this uses image
   { icon: "🌱", title: "Compost", description: "Nutrient-rich fertilizer for plants" },
   { icon: "🏺", title: "Products", description: "Eco-friendly everyday items" },
   { icon: "💧", title: "Water", description: "Clean, mineral-rich drinking water" },
@@ -116,13 +116,18 @@ const AboutPage = () => {
             <h2 className="text-3xl md:text-4xl font-bold mb-4">The Caring Cycle</h2>
             <p className="text-xl text-muted-foreground">How we transform waste into sustainable solutions</p>
           </div>
+
           <div className="relative">
             {/* Desktop Flow */}
             <div className="hidden md:flex items-center justify-between">
               {flowSteps.map((step, index) => (
                 <div key={index} className="flex flex-col items-center relative">
-                  <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center text-3xl mb-4 hover:scale-110 transition-transform duration-300">
-                    {step.icon}
+                  <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center mb-4 hover:scale-110 transition-transform duration-300">
+                    {step.image ? (
+                      <img src={step.image} alt={step.title} className="w-12 h-12 object-contain" />
+                    ) : (
+                      <span className="text-3xl">{step.icon}</span>
+                    )}
                   </div>
                   <h3 className="font-semibold mb-2">{step.title}</h3>
                   <p className="text-sm text-muted-foreground text-center max-w-32">{step.description}</p>
@@ -132,12 +137,17 @@ const AboutPage = () => {
                 </div>
               ))}
             </div>
+
             {/* Mobile Flow */}
             <div className="md:hidden space-y-6">
               {flowSteps.map((step, index) => (
                 <div key={index} className="flex items-center space-x-4">
-                  <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center text-2xl flex-shrink-0">
-                    {step.icon}
+                  <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    {step.image ? (
+                      <img src={step.image} alt={step.title} className="w-10 h-10 object-contain" />
+                    ) : (
+                      <span className="text-2xl">{step.icon}</span>
+                    )}
                   </div>
                   <div className="flex-1">
                     <h3 className="font-semibold mb-1">{step.title}</h3>
@@ -150,7 +160,7 @@ const AboutPage = () => {
         </div>
       </section>
 
-      {/* Our Core Values */}
+      {/* Core Values */}
       <section className="py-20 bg-muted/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -173,7 +183,7 @@ const AboutPage = () => {
         </div>
       </section>
 
-      {/* Our Journey & Milestones */}
+      {/* Journey & Milestones */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-center">
           <div>
