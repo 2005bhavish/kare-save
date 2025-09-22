@@ -17,7 +17,7 @@ import CheckoutPage from "./pages/CheckoutPage";
 import VolunteerPage from "./pages/VolunteerPage";
 import DonationPage from "./pages/DonationPage";
 import Chatbot from "./components/Chatbot";
-import SeekerForm from "./pages/SeekerPage";
+import SeekerForm from "./pages/SeekerForm";
 const queryClient = new QueryClient();
 
 const App = () => (
