@@ -109,7 +109,7 @@ const HomePage = () => {
       </section>
 
       {/* Impact Stats */}
-      <section className="py-16 bg-muted/30">
+      <section className="py-16 bg-black/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             {impactStats.map((stat, index) => (
