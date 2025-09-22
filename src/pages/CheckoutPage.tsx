@@ -256,9 +256,10 @@ const CheckoutPage = () => {
                     <Shield className="h-4 w-4 text-green-500" />
                     <span className="font-medium">Cash on Delivery</span>
                   </div>
-                  <p className="text-sm text-muted-foreground">
-                    Pay when your eco-friendly products are delivered to your doorstep.
-                  </p>
+                  <p className="text-sm text-white">
+  Pay when your eco-friendly products are delivered to your doorstep.
+</p>
+
                 </div>
               </CardContent>
             </Card>
