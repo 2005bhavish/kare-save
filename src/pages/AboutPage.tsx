@@ -63,6 +63,92 @@ const AboutPage = () => {
         </div>
       </section>
 
+      {/* Our Journey */}
+<section className="py-20">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="grid lg:grid-cols-2 gap-12 items-center">
+      <div>
+        <h2 className="text-3xl md:text-4xl font-bold mb-6">Our Journey</h2>
+        <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
+          Started in 2020 with a simple vision: create sustainable solutions that make 
+          environmental responsibility accessible to everyone. Today, we're proud to have 
+          helped thousands of customers reduce their environmental footprint.
+        </p>
+        
+        <div className="space-y-6">
+          <div className="flex items-center space-x-4">
+            <div className="w-12 h-12 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center">
+              <Target className="h-6 w-6 text-green-600" />
+            </div>
+            <div>
+              <h3 className="font-semibold">Our Mission</h3>
+              <p className="text-muted-foreground">
+                Transform waste into wealth through innovative, sustainable solutions
+              </p>
+            </div>
+          </div>
+          
+          <div className="flex items-center space-x-4">
+            <div className="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center">
+              <Award className="h-6 w-6 text-blue-600" />
+            </div>
+            <div>
+              <h3 className="font-semibold">Our Vision</h3>
+              <p className="text-muted-foreground">
+                A world where every household contributes to a circular, sustainable economy
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-8">
+          <Link to="/contact">
+            <Button size="lg" variant="default">
+              Get in Touch
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Button>
+          </Link>
+        </div>
+      </div>
+
+      {/* Milestones + Photos */}
+      <div className="space-y-6">
+        <h3 className="text-2xl font-bold mb-6">Key Milestones</h3>
+        {milestones.map((milestone, index) => (
+          <div key={index} className="flex items-start space-x-4">
+            <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+              <span className="font-bold text-primary">{milestone.year}</span>
+            </div>
+            <div className="pt-3">
+              <p className="text-foreground leading-relaxed">{milestone.event}</p>
+            </div>
+          </div>
+        ))}
+
+        {/* Image Gallery */}
+        <div className="grid grid-cols-2 gap-4 mt-6">
+          <img
+            src="/images/about/1.jpg"
+            alt="Planting sustainable crops"
+            className="rounded-lg shadow-md hover:scale-105 transition-transform duration-300"
+          />
+          <img
+            src="/images/about/2.jpg"
+            alt="Student working on sustainability project"
+            className="rounded-lg shadow-md hover:scale-105 transition-transform duration-300"
+          />
+          <img
+            src="/images/about/3.jpg"
+            alt="Student working on sustainability project"
+            className="rounded-lg shadow-md hover:scale-105 transition-transform duration-300"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
       {/* The Caring Cycle Flow */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
