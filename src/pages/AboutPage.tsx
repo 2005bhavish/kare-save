@@ -11,6 +11,15 @@ const slideshowImages = [
   "/images/about/2.jpg",
   "/images/about/3.jpg",
   "/images/about/4.jpg",
+  "/images/about/5.jpg",
+  "/images/about/6.jpg",
+  "/images/about/7.jpg",
+  "/images/about/8.jpg",
+  "/images/about/9.jpg",
+  "/images/about/10.jpg",
+  "/images/about/11.jpg",
+  "/images/about/12.jpg",
+  "/images/about/13.jpg",
 ];
 
 // Core values
